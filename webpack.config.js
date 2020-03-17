@@ -5,14 +5,16 @@
     entry: path.resolve(__dirname, 'src/index'),
     devtool: 'inline-source-map',
     output: {
+
       path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
+      publicPath: '/'
     },
     module: {
       rules: [{
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),
-        use: ['babel-loader', 'eslint-loader']
+        use: ['babel-loader']
       },
       {
         test: /\.css$/,
@@ -30,6 +32,7 @@
       }]
     },
     devServer: {
+      historyApiFallback: true,
       contentBase:  path.resolve(__dirname, 'dist'),
       port: 3000
     },
