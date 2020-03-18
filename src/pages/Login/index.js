@@ -15,7 +15,7 @@ function Login (props) {
 
   function postLogin() {
     axios.post("http://localhost:3003/authenticate", {
-      userName,
+      username: userName,
       password
     }).then(result => {
       if (result.status === 200) {
@@ -51,8 +51,7 @@ function Login (props) {
                     setPassword(e.target.value);
                   }}
                 />
-                <button onClick={postLogin}>Sign In</button>
-                <Link to="/signup">Don't have an account?</Link>
+                <button onClick={postLogin}>Login</button>
                 { isError &&<div>The username or password provided were incorrect!</div> }
             </section>
         </article>
