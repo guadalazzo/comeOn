@@ -17,17 +17,15 @@
         use: ['babel-loader']
       },
       {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader',
           {
             loader: 'css-loader',
             options: {
               sourceMap: true
             }
-          }
+          },
+          { loader: 'sass-loader' }
         ]
       }]
     },

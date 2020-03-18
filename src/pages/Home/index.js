@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Welcome (props) {
+function Home (props) {
     return <span>Welcome</span>;
 }
 
-export default Welcome;
+export default Home;
