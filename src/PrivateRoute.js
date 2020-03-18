@@ -7,13 +7,13 @@ import { useAuth } from './context/auth';
  */
 
 function PrivateRoute ({ component: Component, ...rest }) {
-    const isAuthenticated = useAuth();
-
+    const { authTokens } = useAuth();
+    console.log(authTokens,'authTokens')
     return (
         <Route
             {...rest}
             render={props =>
-                isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+                authTokens ? <Component {...props} /> : <Redirect to="/login" />
             }
         />
     );

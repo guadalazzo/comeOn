@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MyAccount from './pages/MyAccount';
 import Login from './pages/Login';
@@ -10,10 +10,16 @@ import Home from './pages/Home';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 
-class App extends Component {
-    render () {
+function App(props) {
+    const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+    const [authTokens, setAuthTokens] = useState(existingTokens);
+
+    const setTokens = (data) => {
+        localStorage.setItem("tokens", JSON.stringify(data));
+        setAuthTokens(data);
+      }
         return (
-            <AuthContext.Provider value={false}>
+            <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
                 <Router>
                     <Switch>
                         <Route exact path="/" component={Home} />
@@ -30,6 +36,5 @@ class App extends Component {
                 </Router>
             </AuthContext.Provider>
         );
-    }
 }
 export default App;
