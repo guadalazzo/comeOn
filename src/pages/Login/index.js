@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import './styles.scss';
 import axios from 'axios';
 import { useAuth } from './../../context/auth';
+import Button from '../../components/Button';
+import Card from '../../components/Card';
+import Input from '../../components/Input';
+import Layout from '../../components/Layout';
+import Nav from '../../components/Nav';
 
 function Login (props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -31,13 +36,13 @@ function Login (props) {
     }
 
     if (isLoggedIn) {
-        return <Redirect to="/" />;
+        return <Redirect to="/user-info" />;
     }
     return (
-        <article>
-            <h1>Login</h1>
-            <section>
-                <input
+        <Layout>
+            <Nav><Link to="/">x</Link><h1>Login</h1></Nav>
+            <Card>
+                <Input
                     type="email"
                     value={userName}
                     placeholder="email"
@@ -45,19 +50,19 @@ function Login (props) {
                         setUserName(e.target.value);
                     }}
                 />
-                <input
+                <Input
                     type="password"
                     placeholder="password"
                     onChange={e => {
                         setPassword(e.target.value);
                     }}
                 />
-                <button onClick={postLogin}>Login</button>
+                <Button onClick={postLogin}>Login</Button>
                 {isError && (
                     <div>The username or password provided were incorrect!</div>
                 )}
-            </section>
-        </article>
+            </Card>
+        </Layout>
     );
 }
 

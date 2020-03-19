@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import MyAccount from './pages/MyAccount';
+import UserInfo from './pages/UserInfo';
 import Login from './pages/Login';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Welcome from './pages/Welcome';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 
+import './styles.scss';
 import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 
@@ -25,7 +26,7 @@ function App (props) {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
                     <Route path="/signup" component={SignUp} />
-                    <PrivateRoute exact path="/my-account" component={MyAccount} />
+                    <PrivateRoute exact path="/user-info" component={UserInfo} />
                     <PrivateRoute
                         exact
                         path="/terms-and-conditions"

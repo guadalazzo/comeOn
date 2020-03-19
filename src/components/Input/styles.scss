@@ -1,0 +1,19 @@
+input.input-type {
+  font-size: 1rem;
+  color: #777 !important;
+  line-height: 1.45rem;
+  display: block;
+  padding: 10px;
+  margin-top: 0.33333rem;
+  width: 100%;
+  border: 0.2rem solid #f5f5f5;
+  box-shadow: none;
+  outline: none;
+  border-radius: 0;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}

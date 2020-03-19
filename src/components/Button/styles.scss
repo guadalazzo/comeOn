@@ -1,0 +1,36 @@
+.neu {
+  margin:20px;
+  font-size:1em;
+  width: 100%;
+  color: #5d5d5d; 
+  background:#F5F7FC;
+  padding:20px;
+  border-radius: 10px;
+  border:0;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.15),
+              -5px -5px 10px rgba(255,255,255,0.85);  
+  transition: all 0.5s ease 0s;
+}
+
+.neu:hover,
+.neu-flat:hover
+  {
+    color: #95979C; 
+    background:#F0F2F7;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.05),
+                -5px -5px 5px rgba(255,255,255,0.5),
+                5px 5px 5px inset rgba(0,0,0,0.05),
+                -5px -5px 5px inset rgba(255,255,255,0.5);
+  }
+.neu-flat {
+  border:1 solid #F0F2F7;
+  box-shadow: -3px -3px 5px inset rgba(0,0,0,0.02),
+              3px 3px 5px inset rgba(255,255,255,0.5);  
+  transition: all 0.5s ease 0s;
+}
+.neu-flat:hover {
+  border:0 solid #F2F4F9;
+  box-shadow: 3px 3px 5px inset rgba(0,0,0,0.02),
+              -3px -3px 5px inset rgba(255,255,255,0.5);  
+  transition: all 0.5s ease 0s;
+}
