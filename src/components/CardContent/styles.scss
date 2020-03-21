@@ -1,0 +1,11 @@
+.card__content {
+  height: 85%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  overflow-y: auto;
+  h4,p {
+    text-align: left;
+  }
+}

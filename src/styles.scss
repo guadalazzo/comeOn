@@ -71,7 +71,14 @@ select {
   color: #777;
   font: inherit;
 }
-
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  padding-top: 1em;
+  font-weight: normal;
+  font-size: 1rem;
+}
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
   * {

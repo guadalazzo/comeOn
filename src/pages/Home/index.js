@@ -7,9 +7,17 @@ function Home (props) {
     const { authTokens } = useAuth();
 
     if (authTokens) {
-        return <h1>Home</h1>;
+        if (authTokens.response.showEmailPhoneCondition) {
+            return <Redirect to="/user-info" />;
+        }
+        if (authTokens.response.showTermsAndCondition) {
+            return <Redirect to="/terms-and-conditions" />;
+        }
+        if (authTokens.response.showWelcomeScreen) {
+            return <Redirect to="/welcome" />;
+        }
     }
-    return <Redirect to="/login" />
+    return <Redirect to="/login" />;
 
 }
 export default Home;
