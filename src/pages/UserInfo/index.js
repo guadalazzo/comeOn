@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuth } from './../../context/auth';
-import Layout from '../../components/Layout';
-import Nav from '../../components/Nav';
-import Input from '../../components/Input';
-import Card from '../../components/Card';
-import Button from '../../components/Button';
-import CardContent from '../../components/CardContent';
+import { Layout, Nav, Input, Card, Button, CardContent } from '../../components';
 
 import './styles.scss';
 
@@ -37,8 +32,6 @@ function UserInfo (props) {
     };
 
     function putPlayer () {
-        console.log(phone(), 'phone');
-
         axios
             .put('http://localhost:3003/player', {
                 id,

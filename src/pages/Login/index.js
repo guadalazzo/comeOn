@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import './styles.scss';
 import axios from 'axios';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from './../../context/auth';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import Layout from '../../components/Layout';
-import Nav from '../../components/Nav';
-import { Formik } from 'formik';
+import { Button, Input, Layout, Nav } from '../../components';
+
 function Login (props) {
+    const { setAuthTokens, authTokens } = useAuth();
+    const userName = authTokens && authTokens.response && authTokens.response.username || '';
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
-    const { setAuthTokens } = useAuth();
+
 
     async function postLogin (username, password) {
         try {
@@ -26,7 +26,6 @@ function Login (props) {
                 return;
             } else {
                 setIsError(true);
-
                 return;
             }
         } catch (e) {
@@ -49,6 +48,7 @@ function Login (props) {
     if (isLoggedIn) {
         return <Redirect to="/user-info" />;
     }
+
     return (
         <Layout>
             <Nav>
@@ -57,11 +57,15 @@ function Login (props) {
             </Nav>
             <Formik
                 className="login-content"
-                initialValues={{ username: '', password: '' }}
+                initialValues={{ username: userName, password: '' }}
                 validationSchema={loginSchema}
                 onSubmit={async (values, { setSubmitting }) => {
-                    await postLogin(values.username, values.password);
-                    setSubmitting(false);
+                    if (authTokens && authTokens.status === 'SUCCESS') {
+                        setLoggedIn(true);
+                    } else {
+                        await postLogin(values.username, values.password);
+                        setSubmitting(false);
+                    }
                 }}
             >
                 {({
