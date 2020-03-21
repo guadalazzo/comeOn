@@ -41,7 +41,7 @@ function Login (props) {
     return (
         <Layout>
             <Nav><Link to="/">x</Link><h1>Login</h1></Nav>
-            <Card>
+            <div className="login-content">
                 <Input
                     type="email"
                     value={userName}
@@ -61,7 +61,7 @@ function Login (props) {
                 {isError && (
                     <div>The username or password provided were incorrect!</div>
                 )}
-            </Card>
+            </div>
         </Layout>
     );
 }

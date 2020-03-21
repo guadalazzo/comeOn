@@ -1,4 +1,11 @@
-$body-color: #F5F7FC;
-body {
-  background: $body-color;
+.login-content {
+  max-width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70%;
+  button {
+    margin-top: 4em;
+  }
 }

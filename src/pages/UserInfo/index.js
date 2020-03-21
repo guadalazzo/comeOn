@@ -7,6 +7,7 @@ import Nav from '../../components/Nav';
 import Input from '../../components/Input';
 import Card from '../../components/Card';
 import Button from '../../components/Button';
+import CardContent from '../../components/CardContent';
 
 import './styles.scss';
 
@@ -68,7 +69,7 @@ function UserInfo (props) {
                 <img src="https://img.icons8.com/offices/30/000000/logo.png"/>
             </Nav>
             <Card>
-                <div>
+                <CardContent>
                     <img className="ok-logo" src="https://img.icons8.com/wired/64/000000/checked-user-male.png"/>
                     <h2>Share your details</h2>
                     <Input
@@ -111,7 +112,7 @@ function UserInfo (props) {
                     {isError && (
                         <div>Some of the data is wrong</div>
                     )}
-                </div>
+                </CardContent>
                 <Button onClick={putPlayer}>Continue</Button>
             </Card>
 
