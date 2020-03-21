@@ -11,7 +11,6 @@ import CardContent from '../../components/CardContent';
 
 import './styles.scss';
 
-
 function UserInfo (props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [email, setEmail] = useState('');
@@ -21,11 +20,13 @@ function UserInfo (props) {
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const { setAuthTokens, authTokens } = useAuth();
-    const { response: { id, username, password } } = authTokens;
-    const handleChangePhoneCode = (e) => {
+    const {
+        response: { id, username, password }
+    } = authTokens;
+    const handleChangePhoneCode = e => {
         setCode(e.target.value);
     };
-    const handleChangePhoneNumber = (e) => {
+    const handleChangePhoneNumber = e => {
         setPhoneNumber(e.target.value);
     };
     const phone = () => {
@@ -65,12 +66,17 @@ function UserInfo (props) {
     return (
         <Layout>
             <Nav>
-                <Link to="/login"><div className="arrow-left" /></Link>
-                <img src="https://img.icons8.com/offices/30/000000/logo.png"/>
+                <Link to="/login">
+                    <div className="arrow-left" />
+                </Link>
+                <img src="https://img.icons8.com/offices/30/000000/logo.png" />
             </Nav>
             <Card>
                 <CardContent>
-                    <img className="ok-logo" src="https://img.icons8.com/wired/64/000000/checked-user-male.png"/>
+                    <img
+                        className="ok-logo"
+                        src="https://img.icons8.com/wired/64/000000/checked-user-male.png"
+                    />
                     <h2>Share your details</h2>
                     <Input
                         type="email"
@@ -107,15 +113,14 @@ function UserInfo (props) {
                                 setAcceptMarketing(e.target.checked);
                             }}
                         />
-                        <small>I do not want to receive electronic marketing material.</small>
+                        <small>
+              I do not want to receive electronic marketing material.
+                        </small>
                     </label>
-                    {isError && (
-                        <div>Some of the data is wrong</div>
-                    )}
+                    {isError && <div>Some of the data is wrong</div>}
                 </CardContent>
                 <Button onClick={putPlayer}>Continue</Button>
             </Card>
-
         </Layout>
     );
 }

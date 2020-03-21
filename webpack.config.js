@@ -2,7 +2,7 @@
   const HtmlWebpackPlugin = require('html-webpack-plugin');
 
   module.exports = {
-    entry: path.resolve(__dirname, 'src/index'),
+    entry: ["babel-polyfill", path.resolve(__dirname, 'src/index')],
     devtool: 'inline-source-map',
     output: {
 

@@ -2,66 +2,106 @@ import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import './styles.scss';
 import axios from 'axios';
+import * as Yup from 'yup';
 import { useAuth } from './../../context/auth';
 import Button from '../../components/Button';
-import Card from '../../components/Card';
 import Input from '../../components/Input';
 import Layout from '../../components/Layout';
 import Nav from '../../components/Nav';
-
+import { Formik } from 'formik';
 function Login (props) {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
     const { setAuthTokens } = useAuth();
 
-    function postLogin () {
-        axios
-            .post('http://localhost:3003/authenticate', {
-                username: userName,
+    async function postLogin (username, password) {
+        try {
+            const response = await axios.post('http://localhost:3003/authenticate', {
+                username,
                 password
-            })
-            .then(result => {
-                if (result.status === 200) {
-                    setAuthTokens(result.data);
-                    setLoggedIn(true);
-                } else {
-                    setIsError(true);
-                }
-            })
-            .catch(e => {
-                setIsError(true);
             });
+            if (response.status === 200) {
+                setAuthTokens(response.data);
+                setLoggedIn(true);
+                return;
+            } else {
+                setIsError(true);
+
+                return;
+            }
+        } catch (e) {
+            setIsError(true);
+            return;
+        }
     }
+
+    const loginSchema = Yup.object().shape({
+        username: Yup.string()
+            .min(4, 'Too Short!')
+            .max(50, 'Too Long!')
+            .required('Required'),
+        password: Yup.string()
+            .required('Required')
+            .min(8, 'Password must contain at least 8 characters')
+            .matches(/(?=.*[0-9])/, 'Password must contain a number')
+    });
 
     if (isLoggedIn) {
         return <Redirect to="/user-info" />;
     }
     return (
         <Layout>
-            <Nav><Link to="/">x</Link><h1>Login</h1></Nav>
-            <div className="login-content">
-                <Input
-                    type="email"
-                    value={userName}
-                    placeholder="email"
-                    onChange={e => {
-                        setUserName(e.target.value);
-                    }}
-                />
-                <Input
-                    type="password"
-                    placeholder="password"
-                    onChange={e => {
-                        setPassword(e.target.value);
-                    }}
-                />
-                <Button onClick={postLogin}>Login</Button>
-                {isError && (
-                    <div>The username or password provided were incorrect!</div>
+            <Nav>
+                <Link to="/">x</Link>
+                <h1>Login</h1>
+            </Nav>
+            <Formik
+                className="login-content"
+                initialValues={{ username: '', password: '' }}
+                validationSchema={loginSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                    await postLogin(values.username, values.password);
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting
+                    /* and other goodies */
+                }) => (
+                    <form className="login-content" onSubmit={handleSubmit}>
+                        <Input
+                            type="username"
+                            name="username"
+                            placeholder="Username"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.username}
+                        />
+                        <small>
+                            {errors.username && touched.username && errors.username}
+                        </small>
+                        <Input
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                        />
+                        <small>
+                            {errors.password && touched.password && errors.password}
+                        </small>
+                        <Button type="submit">Login</Button>
+                        {isError && <small>Something went wrong, please try again</small>}
+                    </form>
                 )}
-            </div>
+            </Formik>
         </Layout>
     );
 }
