@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Card component Card snapshot 1`] = `
+<section
+  className="card"
+>
+  Home
+</section>
+`;

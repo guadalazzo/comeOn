@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Button component Button snapshot 1`] = `
+<button
+  className="neu"
+>
+  Home
+</button>
+`;
+
+exports[`Test Button component Test click event 1`] = `
+<button
+  className="neu"
+  onClick={
+    [MockFunction] {
+      "calls": Array [
+        Array [],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+>
+  Ok!
+</button>
+`;

@@ -6,17 +6,17 @@ import { useAuth } from './context/auth';
  * PrivateRoute Decorator routes that cannot be seen without auth
  */
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const { authTokens } = useAuth();
+function PrivateRoute ({ component: Component, ...rest }) {
+    const { authTokens } = useAuth();
 
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        authTokens ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
+    return (
+        <Route
+            {...rest}
+            render={props =>
+                authTokens ? <Component {...props} /> : <Redirect to="/login" />
+            }
+        />
+    );
 }
 
 export default PrivateRoute;

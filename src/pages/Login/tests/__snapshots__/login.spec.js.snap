@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Login Page Login snapshot 1`] = `
+<article
+  className="layout"
+>
+  <nav>
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      x
+    </a>
+    <h1>
+      Login
+    </h1>
+  </nav>
+  <form
+    className="login-content"
+    onSubmit={[Function]}
+  >
+    <input
+      className="input-type"
+      name="username"
+      onBlur={[Function]}
+      onChange={[Function]}
+      placeholder="Username"
+      type="username"
+      value=""
+    />
+    <small />
+    <input
+      className="input-type"
+      name="password"
+      onBlur={[Function]}
+      onChange={[Function]}
+      placeholder="password"
+      type="password"
+      value=""
+    />
+    <small />
+    <button
+      className="neu"
+    >
+      Login
+    </button>
+  </form>
+</article>
+`;
