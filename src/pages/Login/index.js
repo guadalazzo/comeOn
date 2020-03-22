@@ -5,14 +5,13 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from './../../context/auth';
-import {Button, Input, Layout, Nav } from '../../components';
+import { Button, Input, Layout, Nav } from '../../components';
 
 function Login (props) {
-    const { setAuthTokens, authTokens} = useAuth();
+    const { setAuthTokens, authTokens } = useAuth();
     const userName = authTokens && authTokens.response && authTokens.response.username || '';
     const [nextStep, setNextStep] = useState(false);
     const [isError, setIsError] = useState(false);
-
 
     async function postLogin (username, password) {
         try {
@@ -46,7 +45,16 @@ function Login (props) {
     });
 
     if (nextStep) {
-        return <Redirect to="/user-info" />;
+        if (authTokens.response.showEmailPhoneCondition) {
+            return <Redirect to="/user-info" />;
+        }
+        if (authTokens.response.showTermsAndCondition) {
+            return <Redirect to="/terms-and-conditions" />;
+        }
+        if (authTokens.response.showWelcomeScreen && !authTokens.welcomeOk) {
+            return <Redirect to="/welcome" />;
+        }
+        return <Redirect to="/" />;
     }
 
     return (
@@ -84,7 +92,7 @@ function Login (props) {
                             placeholder="Username"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={ values.username}
+                            value={values.username}
                         />
                         <small>
                             {errors.username && touched.username && errors.username}

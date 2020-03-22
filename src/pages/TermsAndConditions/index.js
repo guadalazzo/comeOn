@@ -1,14 +1,36 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Layout from '../../components/Layout';
-import Nav from '../../components/Nav';
-import Card from '../../components/Card';
-import CardContent from '../../components/CardContent';
-import Button from '../../components/Button';
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
+import { Layout, Nav, Card, Button, CardContent } from '../../components';
+import { useAuth } from './../../context/auth';
 import './styles.scss';
 
 function TermsAndConditions (props) {
+    const [nextStep, setNextStep] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const { setAuthTokens, authTokens } = useAuth();
+
+    const handleSubmit = async (e) => {
+        try {
+            const response = await axios.put('http://localhost:3003/player', { ...authTokens.response, acceptTerms: true });
+            if (response.status === 200 && response.data.status === "SUCCESS") {
+                const customTokens = authTokens;
+                customTokens.status = response.data.status;
+                customTokens.response = response.data.response;
+                setAuthTokens(customTokens);
+                setNextStep(true);
+            } else {
+                setIsError(true);
+                return;
+            }
+        } catch (e) {
+            setIsError(true);
+            return;
+        }
+    };
+    if (nextStep) {
+        return <Redirect to="/welcome" />;
+    }
     return (
         <Layout>
             <Nav>
@@ -73,7 +95,8 @@ function TermsAndConditions (props) {
                         </p>
                     </div>
                 </CardContent>
-                <Button>Accept</Button>
+                <Button type="button" onClick={handleSubmit}>Accept</Button>
+                {isError && <div>Some of the data is wrong</div>}
             </Card>
         </Layout>
     );

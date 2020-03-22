@@ -16,15 +16,14 @@ function UserInfo (props) {
     const code = authTokens && authTokens.response && authTokens.code || '';
     const phoneNumber = authTokens && authTokens.response && authTokens.phoneNumber || '';
     const acceptMarketing = authTokens && authTokens.response && authTokens.acceptMarketing || true;
-    console.log(email,code,phoneNumber,acceptMarketing,'eeeeesd');
     const {
         response: { id, username }
     } = authTokens;
 
-    const phone = (code,phoneNumber) => {
+    const phone = (code, phoneNumber) => {
         const auxPhone = { code, phoneNumber };
         if (code !== '' && phoneNumber !== '') {
-            return Object.values(auxPhone).join('');
+            return Object.values(auxPhone).join('-');
         }
     };
     const userInfoSchema = Yup.object().shape({
@@ -36,15 +35,10 @@ function UserInfo (props) {
             .required('Required'),
         phoneNumber: Yup.string()
             .matches(/^[0][1-9]\d{9}$|^[1-9]\d{9}$/, 'Invalid phone number')
-            .required('Required'),
+            .required('Required')
     });
     async function putPlayer (email, code, phoneNumber, acceptMarketing) {
         try {
-            console.log(id,
-            username,
-            email,
-            phone(code, phoneNumber),
-            acceptMarketing,'que mando');
             const response = await axios.put('http://localhost:3003/player', {
                 id,
                 username,
@@ -61,7 +55,6 @@ function UserInfo (props) {
                 setAuthTokens(customData);
                 setNextStep(true);
             } else {
-                console.log('eee', response);
                 setIsError(true);
                 return;
             }
@@ -87,7 +80,6 @@ function UserInfo (props) {
                     initialValues={{ email: email, code: code, phoneNumber: phoneNumber, acceptMarketing: acceptMarketing }}
                     validationSchema={userInfoSchema}
                     onSubmit={async (values, { setSubmitting }) => {
-                        console.log(values);
                         if (authTokens &&
                             !authTokens.response.showEmailPhoneScreen &&
                             authTokens.status === 'SUCCESS') {
@@ -122,7 +114,7 @@ function UserInfo (props) {
                                     placeholder="Email"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={ values.email}
+                                    value={values.email}
                                 />
                                 <small>
                                     {errors.email && touched.email && errors.email}

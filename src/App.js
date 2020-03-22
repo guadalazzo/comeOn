@@ -4,7 +4,6 @@ import UserInfo from './pages/UserInfo';
 import Login from './pages/Login';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Welcome from './pages/Welcome';
-import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 
 import './styles.scss';
@@ -19,13 +18,16 @@ function App (props) {
         localStorage.setItem('tokens', JSON.stringify(data));
         setAuthTokens(data);
     };
+    const deleteTokens = () => {
+        localStorage.removeItem("tokens");
+        setAuthTokens();
+    };
     return (
-        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+        <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens, deleteTokens }}>
             <Router>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
-                    <Route path="/signup" component={SignUp} />
                     <PrivateRoute exact path="/user-info" component={UserInfo} />
                     <PrivateRoute
                         exact
