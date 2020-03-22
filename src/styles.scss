@@ -53,6 +53,7 @@ a:not([class]) {
 }
 a{
   text-decoration: none;
+  cursor: pointer;
 }
 /* Make images easier to work with */
 img {
