@@ -5,12 +5,12 @@ import axios from 'axios';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from './../../context/auth';
-import { Button, Input, Layout, Nav } from '../../components';
+import {Button, Input, Layout, Nav } from '../../components';
 
 function Login (props) {
-    const { setAuthTokens, authTokens } = useAuth();
+    const { setAuthTokens, authTokens} = useAuth();
     const userName = authTokens && authTokens.response && authTokens.response.username || '';
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [nextStep, setNextStep] = useState(false);
     const [isError, setIsError] = useState(false);
 
 
@@ -22,7 +22,7 @@ function Login (props) {
             });
             if (response.status === 200) {
                 setAuthTokens(response.data);
-                setLoggedIn(true);
+                setNextStep(true);
                 return;
             } else {
                 setIsError(true);
@@ -45,7 +45,7 @@ function Login (props) {
             .matches(/(?=.*[0-9])/, 'Password must contain a number')
     });
 
-    if (isLoggedIn) {
+    if (nextStep) {
         return <Redirect to="/user-info" />;
     }
 
@@ -56,12 +56,11 @@ function Login (props) {
                 <h1>Login</h1>
             </Nav>
             <Formik
-                className="login-content"
                 initialValues={{ username: userName, password: '' }}
                 validationSchema={loginSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     if (authTokens && authTokens.status === 'SUCCESS') {
-                        setLoggedIn(true);
+                        setNextStep(true);
                     } else {
                         await postLogin(values.username, values.password);
                         setSubmitting(false);
@@ -85,7 +84,7 @@ function Login (props) {
                             placeholder="Username"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.username}
+                            value={ values.username}
                         />
                         <small>
                             {errors.username && touched.username && errors.username}
