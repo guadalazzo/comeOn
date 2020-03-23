@@ -12,15 +12,28 @@ function TermsAndConditions (props) {
 
     const handleSubmit = async e => {
         try {
+            const {
+                id,
+                username,
+                showEmailPhoneScreen,
+                email,
+                phone,
+                acceptMarketing,
+                showTermsAndCondition,
+                showWelcomeScreen } = authTokens;
             const response = await axios.put('http://localhost:3003/player', {
-                ...authTokens.response,
+                id,
+                username,
+                showEmailPhoneScreen,
+                email,
+                phone,
+                acceptMarketing,
+                showTermsAndCondition,
+                showWelcomeScreen,
                 acceptTerms: true
             });
             if (response.status === 200 && response.data.status === 'SUCCESS') {
-                const customTokens = authTokens;
-                customTokens.status = response.data.status;
-                customTokens.response = response.data.response;
-                setAuthTokens(customTokens);
+                setAuthTokens(response.data);
                 setNextStep(true);
             } else {
                 setIsError(true);

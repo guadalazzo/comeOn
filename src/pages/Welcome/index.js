@@ -5,13 +5,11 @@ import { Layout, Button, Card } from '../../components';
 import './styles.scss';
 
 function Welcome (props) {
-    const { setAuthTokens, authTokens } = useAuth();
+    const { setFullLoggedUser } = useAuth();
     const [nextStep, setNextStep] = useState(false);
 
     const handleClick = e => {
-        const customAuthTokens = authTokens;
-        customAuthTokens.welcomeOk = true;
-        setAuthTokens(customAuthTokens);
+        setFullLoggedUser(true);
         setNextStep(true);
     };
 

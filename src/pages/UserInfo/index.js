@@ -16,17 +16,22 @@ import {
 import './styles.scss';
 
 function UserInfo (props) {
+    const decodePhone = (phoneComplete) => {
+        if (phoneComplete) {
+            const [code, phoneNumber] = phoneComplete.split('-');
+            return { code, phoneNumber };
+        }
+        return { code: '', phoneNumber: '' };
+    }
     const [nextStep, setNextStep] = useState(false);
     const [isError, setIsError] = useState(false);
     const { setAuthTokens, authTokens } = useAuth();
-    const email = (authTokens && authTokens.response && authTokens.email) || '';
-    const code = (authTokens && authTokens.response && authTokens.code) || '';
-    const phoneNumber =
-    (authTokens && authTokens.response && authTokens.phoneNumber) || '';
+    const email = (authTokens && authTokens.email) || '';
+    const { code, phoneNumber } = decodePhone(authTokens.phone);
     const acceptMarketing =
-    (authTokens && authTokens.response && authTokens.acceptMarketing) || true;
+    (authTokens && authTokens.acceptMarketing) || true;
     const {
-        response: { id, username }
+        id, username
     } = authTokens;
 
     const phone = (code, phoneNumber) => {
@@ -35,6 +40,7 @@ function UserInfo (props) {
             return Object.values(auxPhone).join('-');
         }
     };
+
     const userInfoSchema = Yup.object().shape({
         email: Yup.string()
             .email('Invalid email')
@@ -56,12 +62,7 @@ function UserInfo (props) {
                 acceptMarketing
             });
             if (response.status === 200 && response.data.status === 'SUCCESS') {
-                const customData = response.data;
-                customData.email = email;
-                customData.code = code;
-                customData.phoneNumber = phoneNumber;
-                customData.acceptMarketing = acceptMarketing;
-                setAuthTokens(customData);
+                setAuthTokens(response.data);
                 setNextStep(true);
             } else {
                 setIsError(true);
@@ -96,8 +97,7 @@ function UserInfo (props) {
                     onSubmit={async (values, { setSubmitting }) => {
                         if (
                             authTokens &&
-              !authTokens.response.showEmailPhoneScreen &&
-              authTokens.status === 'SUCCESS'
+              !authTokens.showEmailPhoneScreen
                         ) {
                             setNextStep(true);
                         } else {
@@ -105,7 +105,8 @@ function UserInfo (props) {
                                 values.email,
                                 values.code,
                                 values.phoneNumber,
-                                values.acceptMarketing
+                                values.acceptMarketing,
+                                values.password
                             );
                             setSubmitting(false);
                         }

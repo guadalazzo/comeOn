@@ -10,7 +10,8 @@ import { Button, Input, Layout, Nav } from '../../components';
 function Login (props) {
     const { setAuthTokens, authTokens } = useAuth();
     const userName =
-    (authTokens && authTokens.response && authTokens.response.username) || '';
+    (authTokens && authTokens.username) || '';
+    const password = (authTokens && authTokens.password) || '';
     const [nextStep, setNextStep] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -46,13 +47,13 @@ function Login (props) {
     });
 
     if (nextStep) {
-        if (authTokens.response.showEmailPhoneScreen) {
+        if (authTokens.showEmailPhoneScreen) {
             return <Redirect to="/user-info" />;
         }
-        if (authTokens.response.showTermsAndCondition) {
+        if (authTokens.showTermsAndCondition) {
             return <Redirect to="/terms-and-conditions" />;
         }
-        if (authTokens.response.showWelcomeScreen && !authTokens.welcomeOk) {
+        if (authTokens.showWelcomeScreen && !authTokens.welcomeOk) {
             return <Redirect to="/welcome" />;
         }
         return <Redirect to="/" />;
@@ -65,7 +66,7 @@ function Login (props) {
                 <h1>Login</h1>
             </Nav>
             <Formik
-                initialValues={{ username: userName, password: '' }}
+                initialValues={{ username: userName, password: password }}
                 validationSchema={loginSchema}
                 onSubmit={async (values, { setSubmitting }) => {
                     if (authTokens && authTokens.status === 'SUCCESS') {

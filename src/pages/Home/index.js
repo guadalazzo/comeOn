@@ -5,7 +5,7 @@ import { Layout, Nav, Card } from '../../components';
 import './styles.scss';
 
 function Home (props) {
-    const { authTokens, deleteTokens } = useAuth();
+    const { authTokens, deleteTokens, fullLoggedUser } = useAuth();
     const currentState = !!authTokens;
     const [isLogged, setIsLogged] = useState(currentState);
 
@@ -16,13 +16,13 @@ function Home (props) {
         }
     };
     if (authTokens) {
-        if (authTokens.response.showEmailPhoneScreen) {
+        if (authTokens.showEmailPhoneScreen) {
             return <Redirect to="/user-info" />;
         }
-        if (authTokens.response.showTermsAndCondition) {
+        if (authTokens.showTermsAndCondition) {
             return <Redirect to="/terms-and-conditions" />;
         }
-        if (authTokens.response.showWelcomeScreen && !authTokens.welcomeOk) {
+        if (authTokens.showWelcomeScreen && !fullLoggedUser) {
             return <Redirect to="/welcome" />;
         }
         return (

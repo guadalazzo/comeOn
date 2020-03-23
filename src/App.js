@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import jwt from 'jwt-decode'
 import UserInfo from './pages/UserInfo';
 import Login from './pages/Login';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -11,12 +12,15 @@ import PrivateRoute from './PrivateRoute';
 import { AuthContext } from './context/auth';
 
 function App (props) {
-    const existingTokens = JSON.parse(localStorage.getItem('tokens'));
-    const [authTokens, setAuthTokens] = useState(existingTokens);
-
+    const existingTokens = localStorage.getItem('tokens') || '';
+    const initialToken = existingTokens !== '' ? jwt(existingTokens) : '';
+    const [authTokens, setAuthTokens] = useState(initialToken);
+    const [fullLoggedUser, setFullLoggedUser] = useState(false);
     const setTokens = data => {
-        localStorage.setItem('tokens', JSON.stringify(data));
-        setAuthTokens(data);
+        const token = data.token;
+        const user = jwt(token);
+        localStorage.setItem('tokens', token);
+        setAuthTokens(user);
     };
     const deleteTokens = () => {
         localStorage.removeItem('tokens');
@@ -24,7 +28,7 @@ function App (props) {
     };
     return (
         <AuthContext.Provider
-            value={{ authTokens, setAuthTokens: setTokens, deleteTokens }}
+            value={{ authTokens, setAuthTokens: setTokens, deleteTokens, setFullLoggedUser, fullLoggedUser }}
         >
             <Router>
                 <Switch>
