@@ -111,7 +111,6 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2020 [Guadalupe Jazmin Lazzo](https://github.com/guadalazzo).<br />
-This project is [ISC](https://github.com/guadalazzo/comeOn/blob/master/LICENSE) licensed.
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
