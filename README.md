@@ -16,7 +16,7 @@
 </p>
 
 A simple Registration and login flow created in react without any precreated setups connected to a node server, it use formik and Yup for validations, Jest for unit testing, Sass as a css preprocessor, and eslint as code formatter.
-There are two common cases 
+There are two common cases:
 A => NEW USER
 B => REGISTRED USER
 
@@ -25,9 +25,9 @@ A - When a new user acces to the route */* checks if it's logged in, if not  red
 B - When a registered user acces to the route */* checks in wich state drop out and send him to that point.
 ### 1. Registration/Login Screen "/login"
 
-  A - Register new user, if passes the validation and click login, the user is sended to the backend for storage, the flow continues to user info screen
+  A - New user register, if passes the validation and click login, the user is sended to the backend for storage, the flow continues to user info screen
   
-  B - Access user, if the backend answer with succes to the username and password sendend by the user, it take it to the page where it drop out the last time.
+  B - The user access, if the backend answer with succes to the username and password sendend by the user, it take it to the page where it drop out the last time.
  
    <img src="public/Login.png" width="200">
    <br/>
@@ -45,7 +45,7 @@ B - When a registered user acces to the route */* checks in wich state drop out 
 
 ### 3. Terms and Conditions Screen
 
-A & B - Reads and clicks continue, when it happens sends this info to the backend updating the user
+A & B - The users Read and click to continue, when it happens sends this info to the backend updating the user
 
    <img src="public/terms.png" width="200">
    <br/>
@@ -53,14 +53,15 @@ A & B - Reads and clicks continue, when it happens sends this info to the backen
 
 ### 4. Welcome Screen
 
-A & B - clicks continue to send him to home. 
+A & B - click to continue, this will send them home. 
 
    <img src="public/welcome.png" width="200">
    <br/>
    <br/>
+   
 ### 4. Home
 
-  A & B - can logout, it will take them to login again.
+  A & B - Both can logout, it will take them to login again.
 
   <img src="public/home.png" width="200">
    <br/>
